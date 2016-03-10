@@ -80,6 +80,14 @@ class GamesLog
     end
   end
 
+  def show_games
+    for i in @games
+      puts '---'
+      puts i[0]
+      puts i[1]
+    end
+  end
+
   def get_ranking
     @ranking
   end
@@ -108,5 +116,14 @@ end
 
 game = GamesLog.new
 game.parse
-game.kills_report
+
+puts 'Games'
+game.show_games
+
+puts ' '
+puts 'Ranking'
 game.ranking
+
+puts ' '
+puts 'Kills Report'
+game.kills_report
