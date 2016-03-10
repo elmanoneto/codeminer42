@@ -6,8 +6,8 @@ Codeminer42 challenge.
 
 The parser is made as follows, in line 16 I check when starting a new game, then create or empty variables.
 In line 25 is where it appears the names of the players, so I created a regex to slice and add the names on the list.
-In line 31 deaths are checked where I check who killed whom and whether the person was killed by <world> and is also added to the list. 
-In line 47 just caught in the death reasons and add to the list. Finally is added to the list of games all the collected data, starts the loop again to end log.
+In line 31 filter who killed who and if the player was killed by another player or otherwise.
+In line 47 just caught in the death means and add to the list. Finally is added to the list of games all the collected data, starts the loop again to end log.
 
 ## Installation
 
