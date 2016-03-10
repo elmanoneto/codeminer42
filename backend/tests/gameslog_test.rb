@@ -6,8 +6,8 @@ class GamesLogTest < Minitest::Test
   def setup
     @game = GamesLog.new
     @game.parse
-    @game.ranking
-    @game.kills_report
+    @game.create_ranking
+    @game.create_kills_report
   end
 
   def test_instance_game

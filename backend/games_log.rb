@@ -61,21 +61,31 @@ class GamesLog
     end
   end
 
-  def ranking
+  def show_ranking
     for i in @games
       puts '---'
       puts "Ranking: #{i[0]}"
       puts i[1][:kills].sort_by {|_key, value| value}.reverse
       puts "Hash: #{i[1][:kills]}"
+    end
+  end
+
+  def create_ranking
+    for i in @games
       @ranking["game_#{i[0]}"] = i[1][:kills].sort_by {|_key, value| value}.reverse
     end
   end
 
-  def kills_report
+  def show_kills_report
     for i in @games
       puts '---'
       puts i[0]
       puts i[1][:kills_by_means]
+    end
+  end
+
+  def create_kills_report
+    for i in @games
       @report["game_#{i[0]}"] = i[1][:kills_by_means]
     end
   end
@@ -113,17 +123,3 @@ class GamesLog
   end
 
 end
-
-game = GamesLog.new
-game.parse
-
-puts 'Games'
-game.show_games
-
-puts ' '
-puts 'Ranking'
-game.ranking
-
-puts ' '
-puts 'Kills Report'
-game.kills_report
