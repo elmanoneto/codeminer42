@@ -17,15 +17,15 @@ class GamesLog
       if i.include? 'InitGame'
         kill = 0
         game += 1
-        list = []
-        kills = []
+        players_list = []
+        kills_list = []
       end
 
       # add player in list
       if i.include? 'ClientUserinfoChanged'
         start = "n\\\\"
         finish = "\\\\"
-        list << i[/#{start}(.*?)#{finish}/m, 1]
+        players_list << i[/#{start}(.*?)#{finish}/m, 1]
       end
 
       # filter who killed who
@@ -33,12 +33,12 @@ class GamesLog
         start = ":"
         finish = " killed"
         if i[13..-1][/#{start}(.*?)#{finish}/m, 1].delete(' ') != '<world>'
-          kills << i[13..-1][/#{start}(.*?)#{finish}/m, 1].delete(' ')
+          kills_list << i[13..-1][/#{start}(.*?)#{finish}/m, 1].delete(' ')
         else
           start = "killed"
           finish = "by"
           player = i[/#{start}(.*?)#{finish}/m, 1].delete(' ')
-          kills.delete(player) if kills.include? player
+          kills_list.delete(player) if kills_list.include? player
         end
         kill += 1
       end
@@ -46,7 +46,7 @@ class GamesLog
       if game == 0 then next end
 
       @players[game] = list
-      @games["game_#{game}"] = {players: list.uniq, total_kills: kill, kills: count_duplicates(kills)}
+      @games["game_#{game}"] = {players: players_list.uniq, total_kills: kill, kills: count_duplicates(kills_list)}
 
     end
   end
