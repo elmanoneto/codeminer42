@@ -3,6 +3,8 @@ class GamesLog
   def initialize
     @log = IO.readlines('games.log')
     @games = {}
+    @ranking = {}
+    @report = {}
   end
 
   def parse
@@ -65,6 +67,7 @@ class GamesLog
       puts "Ranking: #{i[0]}"
       puts i[1][:kills].sort_by {|_key, value| value}.reverse
       puts "Hash: #{i[1][:kills]}"
+      @ranking["game_#{i[0]}"] = i[1][:kills].sort_by {|_key, value| value}.reverse
     end
   end
 
@@ -73,11 +76,24 @@ class GamesLog
       puts '---'
       puts i[0]
       puts i[1][:kills_by_means]
+      @report["game_#{i[0]}"] = i[1][:kills_by_means]
     end
+  end
+
+  def get_ranking
+    @ranking
+  end
+
+  def get_kills_report
+    @report
   end
 
   def get_games
     @games
+  end
+
+  def get_log
+    @log
   end
 
   private
