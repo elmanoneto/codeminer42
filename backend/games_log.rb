@@ -47,13 +47,17 @@ class GamesLog
 
       @players[game] = list
       @games["game_#{game}"] = {players: list.uniq, total_kills: kill, kills: count_duplicates(kills)}
+
     end
   end
 
-  def count_duplicates array
-    hash = Hash.new(0)
-    array.each { |i| hash.store(i, hash[i]+1) }
-    hash
+  def ranking
+    for i in @games
+      puts '---'
+      puts "Ranking: #{i[0]}"
+      puts i[1][:kills].sort_by {|_key, value| value}.reverse
+      puts "Hash: #{i[1][:kills]}"
+    end
   end
 
   def get_games
@@ -64,4 +68,16 @@ class GamesLog
     @players
   end
 
+  private
+
+  def count_duplicates array
+    hash = Hash.new(0)
+    array.each {|i| hash.store(i, hash[i]+1)}
+    hash
+  end
+
 end
+
+game = GamesLog.new
+game.parse
+game.ranking
