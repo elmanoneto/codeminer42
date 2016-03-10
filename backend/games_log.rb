@@ -3,13 +3,10 @@ class GamesLog
   def initialize
     @log = IO.readlines('games.log')
     @games = {}
-    @players = {}
   end
 
   def parse
     game = 0
-    kill = 0
-    list = []
 
     for i in @log
 
@@ -19,6 +16,7 @@ class GamesLog
         game += 1
         players_list = []
         kills_list = []
+        kills_by_means_list = []
       end
 
       # add player in list
@@ -43,10 +41,20 @@ class GamesLog
         kill += 1
       end
 
+      # filter means of death
+      if i.include? 'Kill'
+        start = "by"
+        kills_by_means_list << i.partition('by').last.delete!(' ') .delete!("\n")
+      end
+
       if game == 0 then next end
 
-      @players[game] = list
-      @games["game_#{game}"] = {players: players_list.uniq, total_kills: kill, kills: count_duplicates(kills_list)}
+      @games["game_#{game}"] = {
+        players: players_list.uniq,
+        total_kills: kill,
+        kills: count_duplicates(kills_list),
+        kills_by_means: count_duplicates(kills_by_means_list)
+      }
 
     end
   end
@@ -60,12 +68,16 @@ class GamesLog
     end
   end
 
-  def get_games
-    @games
+  def kills_report
+    for i in @games
+      puts '---'
+      puts i[0]
+      puts i[1][:kills_by_means]
+    end
   end
 
-  def get_players
-    @players
+  def get_games
+    @games
   end
 
   private
@@ -80,4 +92,5 @@ end
 
 game = GamesLog.new
 game.parse
+game.kills_report
 game.ranking
