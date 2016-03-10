@@ -4,7 +4,7 @@ Codeminer42 challenge.
 
 ## Installation
 
-##### H5 Backend:
+##### Backend:
 
 Just having the ruby and run bundler if you haven't installed the minitest gem.
 
@@ -12,6 +12,6 @@ Just having the ruby and run bundler if you haven't installed the minitest gem.
 
 ## Tests
 
-##### H5 Backend:
+##### Backend:
 
 <tt>ruby tests/gameslog_test.rb</tt>
